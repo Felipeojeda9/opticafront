@@ -88,17 +88,10 @@ export function LoginPage() {
             </Button>
           </form>
 
-          <p className="text-sm text-ink-2 mt-8 text-center">
-            ¿No tienes cuenta?{' '}
-            <Link to="/register" className="text-zeus-500 hover:text-zeus-700 font-medium">
-              Crear una
-            </Link>
-          </p>
         </div>
       </div>
 
       <div className="hidden lg:flex relative bg-zeus-500 text-white flex-col justify-between p-12 overflow-hidden">
-        {/* Patrón decorativo sutil */}
         <div className="absolute inset-0 opacity-10" style={{
           backgroundImage: 'radial-gradient(circle at 20% 20%, white 1px, transparent 1px), radial-gradient(circle at 80% 60%, white 1px, transparent 1px)',
           backgroundSize: '40px 40px',
