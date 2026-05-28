@@ -6,7 +6,6 @@ import { PageHeader } from '../components/ui/PageHeader'
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
-import { Select } from '../components/ui/Select'
 
 const ROL_LABEL = {
   PACIENTE:    'Paciente',
@@ -18,6 +17,45 @@ const ROL_ICON = {
   PACIENTE:    'ti-user',
   PROFESIONAL: 'ti-stethoscope',
   ADMIN:       'ti-shield-lock',
+}
+
+// === Validaciones ===
+function calcularDvRut(numero) {
+  let suma = 0
+  let multiplo = 2
+  for (let i = numero.length - 1; i >= 0; i--) {
+    suma += parseInt(numero.charAt(i), 10) * multiplo
+    multiplo = multiplo === 7 ? 2 : multiplo + 1
+  }
+  const resto = 11 - (suma % 11)
+  if (resto === 11) return '0'
+  if (resto === 10) return 'K'
+  return String(resto)
+}
+
+function validarRut(rut) {
+  if (!rut) return 'El RUT es obligatorio'
+  const limpio = rut.replace(/\./g, '').toUpperCase()
+  const regex = /^\d{7,8}-[\dK]$/
+  if (!regex.test(limpio)) {
+    return 'Formato inválido. Usa 12345678-9 (sin puntos, con guión)'
+  }
+  const [numero, dv] = limpio.split('-')
+  if (dv !== calcularDvRut(numero)) {
+    return 'RUT inválido (dígito verificador incorrecto)'
+  }
+  return null
+}
+
+function validarTelefono(telefono) {
+  if (!telefono) return null // opcional
+  const soloDigitos = telefono.replace(/[\s+\-]/g, '')
+  if (!/^\d+$/.test(soloDigitos)) {
+    return 'Solo dígitos, espacios, + y -'
+  }
+  if (soloDigitos.length < 8) return 'Mínimo 8 dígitos'
+  if (soloDigitos.length > 12) return 'Máximo 12 dígitos'
+  return null
 }
 
 export function NuevoUsuarioPage() {
@@ -38,16 +76,32 @@ export function NuevoUsuarioPage() {
     telefono: '',
     especialidad: '',
   })
+  const [errores, setErrores] = useState({})
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const update = (key) => (e) => setForm({ ...form, [key]: e.target.value })
+  const update = (key) => (e) => {
+    setForm({ ...form, [key]: e.target.value })
+    if (errores[key]) setErrores({ ...errores, [key]: null })
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     setSuccess('')
+
+    const erroresLocal = {}
+    const errRut = validarRut(form.rut)
+    if (errRut) erroresLocal.rut = errRut
+    const errTel = validarTelefono(form.telefono)
+    if (errTel) erroresLocal.telefono = errTel
+
+    if (Object.keys(erroresLocal).length > 0) {
+      setErrores(erroresLocal)
+      return
+    }
+
     setLoading(true)
     try {
       const payload = {
@@ -55,7 +109,7 @@ export function NuevoUsuarioPage() {
         email: form.email,
         password: form.password,
         rol: form.rol,
-        rut: form.rut,
+        rut: form.rut.replace(/\./g, '').toUpperCase(),
       }
       if (form.rol === 'PACIENTE') {
         payload.fechaNacimiento = form.fechaNacimiento
@@ -78,6 +132,7 @@ export function NuevoUsuarioPage() {
         telefono: '',
         especialidad: '',
       })
+      setErrores({})
     } catch (err) {
       setError(err.message)
     } finally {
@@ -113,11 +168,7 @@ export function NuevoUsuarioPage() {
             <div className="flex-1">
               <p className="text-sm text-zeus-700">{error}</p>
             </div>
-            <button
-              onClick={() => setError('')}
-              className="text-zeus-500 hover:text-zeus-700"
-              aria-label="Cerrar"
-            >
+            <button onClick={() => setError('')} className="text-zeus-500 hover:text-zeus-700" aria-label="Cerrar">
               <i className="ti ti-x text-base" />
             </button>
           </div>
@@ -134,11 +185,7 @@ export function NuevoUsuarioPage() {
                 El formulario quedó listo para crear otro usuario del mismo rol.
               </p>
             </div>
-            <button
-              onClick={() => setSuccess('')}
-              className="text-state-confirmed-text hover:opacity-70"
-              aria-label="Cerrar"
-            >
+            <button onClick={() => setSuccess('')} className="text-state-confirmed-text hover:opacity-70" aria-label="Cerrar">
               <i className="ti ti-x text-base" />
             </button>
           </div>
@@ -160,12 +207,9 @@ export function NuevoUsuarioPage() {
               ))}
             </div>
             <p className="text-[11px] text-ink-2 mt-3 leading-relaxed">
-              {form.rol === 'PACIENTE' &&
-                'Cuenta para agendar citas y ver historial propio.'}
-              {form.rol === 'PROFESIONAL' &&
-                'Cuenta con acceso a su agenda, citas asignadas y bloqueos de horario.'}
-              {form.rol === 'ADMIN' &&
-                'Cuenta con acceso completo: panel, usuarios, agenda de todos los profesionales.'}
+              {form.rol === 'PACIENTE' && 'Cuenta para agendar citas y ver historial propio.'}
+              {form.rol === 'PROFESIONAL' && 'Cuenta con acceso a su agenda, citas asignadas y bloqueos de horario.'}
+              {form.rol === 'ADMIN' && 'Cuenta con acceso completo: panel, usuarios, agenda de todos los profesionales.'}
             </p>
           </Card>
         )}
@@ -176,37 +220,39 @@ export function NuevoUsuarioPage() {
             <Input
               label="Nombre completo"
               required
+              maxLength={80}
               autoComplete="name"
               placeholder="Felipe Aravena"
               value={form.nombre}
               onChange={update('nombre')}
               className="md:col-span-2"
             />
-
             <Input
               label="Correo electrónico"
               type="email"
               required
+              maxLength={100}
               autoComplete="email"
               placeholder="persona@correo.cl"
               value={form.email}
               onChange={update('email')}
             />
-
             <Input
               label="RUT"
               required
+              maxLength={10}
               placeholder="12345678-9"
-              hint="Sin puntos, con guión"
+              hint={errores.rut ? null : 'Sin puntos, con guión'}
+              error={errores.rut}
               value={form.rut}
               onChange={update('rut')}
             />
-
             <Input
               label="Contraseña inicial"
               type="password"
               required
               minLength={6}
+              maxLength={50}
               autoComplete="new-password"
               placeholder="Mínimo 6 caracteres"
               hint="La persona podrá cambiarla después."
@@ -231,8 +277,10 @@ export function NuevoUsuarioPage() {
               <Input
                 label="Teléfono"
                 type="tel"
+                maxLength={15}
                 placeholder="+56 9 1234 5678"
-                hint="Opcional, pero recomendado para recordatorios"
+                hint={errores.telefono ? null : 'Opcional. Entre 8 y 12 dígitos.'}
+                error={errores.telefono}
                 value={form.telefono}
                 onChange={update('telefono')}
               />
@@ -246,6 +294,7 @@ export function NuevoUsuarioPage() {
             <Input
               label="Especialidad"
               required
+              maxLength={50}
               placeholder="Ej: Optometría, Oftalmología"
               value={form.especialidad}
               onChange={update('especialidad')}
@@ -269,20 +318,12 @@ export function NuevoUsuarioPage() {
           </Card>
         )}
 
-        {/* Acciones */}
         <div className="flex items-center gap-3">
-          <Button
-            type="submit"
-            size="lg"
-            loading={loading}
-            iconRight="ti-check"
-          >
+          <Button type="submit" size="lg" loading={loading} iconRight="ti-check">
             {loading ? 'Creando' : 'Crear usuario'}
           </Button>
           <Link to={volverA}>
-            <Button variant="ghost" size="lg">
-              Cancelar
-            </Button>
+            <Button variant="ghost" size="lg">Cancelar</Button>
           </Link>
         </div>
       </form>
@@ -301,12 +342,8 @@ function RolToggle({ rol, activo, onClick }) {
           : 'border-bone-border bg-white hover:border-zeus-200'
       }`}
     >
-      <i className={`ti ${ROL_ICON[rol]} text-xl ${
-        activo ? 'text-zeus-500' : 'text-ink-2'
-      }`} />
-      <span className={`text-[13px] font-medium ${
-        activo ? 'text-zeus-700' : 'text-ink-1'
-      }`}>
+      <i className={`ti ${ROL_ICON[rol]} text-xl ${activo ? 'text-zeus-500' : 'text-ink-2'}`} />
+      <span className={`text-[13px] font-medium ${activo ? 'text-zeus-700' : 'text-ink-1'}`}>
         {ROL_LABEL[rol]}
       </span>
     </button>
