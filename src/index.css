@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   ZEUS DESIGN TOKENS
+   Variables CSS · fuente única de verdad
+   ============================================ */
+
+:root {
+  /* === MARCA · Rojo Zeus === */
+  --zeus-50:  #FDF2F3;
+  --zeus-100: #FBE0E2;
+  --zeus-200: #F4B5BA;
+  --zeus-300: #E47880;
+  --zeus-400: #C73642;
+  --zeus-500: #A8202D;  /* base de marca */
+  --zeus-600: #8A1721;
+  --zeus-700: #6B1018;
+  --zeus-800: #4A0B11;
+
+  /* === NEUTROS · Cálidos (hueso) === */
+  --bone-bg:      #FAFAF7;  /* fondo de página */
+  --bone-surface: #F5F4F0;  /* superficies elevadas suaves */
+  --bone-border:  #E8E6DF;  /* bordes finos */
+  --bone-muted:   #C2BFB6;  /* placeholders, disabled */
+
+  --ink-2: #6E6B62;  /* texto secundario */
+  --ink-1: #2C2A23;  /* texto principal */
+  --ink-0: #18171F;  /* títulos máximo contraste */
+
+  /* === ESTADOS SEMÁNTICOS === */
+  --state-pending-bg:    #FEF4E0;
+  --state-pending-text:  #6B4A06;
+  --state-pending-line:  #C88A0F;
+
+  --state-confirmed-bg:    #E6F2E1;
+  --state-confirmed-text:  #1F4710;
+  --state-confirmed-line:  #4A8B2A;
+
+  --state-cancelled-bg:    #EEEEEC;
+  --state-cancelled-text:  #444441;
+  --state-cancelled-line:  #888780;
+
+  --state-info-bg:    #E8EEF8;
+  --state-info-text:  #0F2C56;
+  --state-info-line:  #2860A8;
+
+  /* === TIPOGRAFÍA === */
+  --font-sans:   'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif:  'Fraunces', Georgia, serif;
+  --font-mono:   'JetBrains Mono', 'SF Mono', Menlo, monospace;
+
+  /* === RADIOS === */
+  --radius-sm: 4px;   /* pills, badges */
+  --radius-md: 6px;   /* inputs, botones */
+  --radius-lg: 8px;   /* cards */
+  --radius-xl: 12px;  /* modales, paneles grandes */
+
+  /* === SHADOWS · sutiles, casi ausentes === */
+  --shadow-sm: 0 1px 2px rgba(24, 23, 31, 0.04);
+  --shadow-md: 0 2px 8px rgba(24, 23, 31, 0.06);
+  --shadow-lg: 0 8px 24px rgba(24, 23, 31, 0.08);
+
+  /* === LAYOUT === */
+  --sidebar-width: 220px;
+  --header-height: 64px;
+}
+
+/* ============================================
+   ESTILOS BASE GLOBALES
+   ============================================ */
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: var(--ink-1);
+    background: var(--bone-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--ink-0);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  h1 {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+  }
+
+  /* Focus visible accesible · ring rojo suave */
+  *:focus-visible {
+    outline: 2px solid var(--zeus-400);
+    outline-offset: 2px;
+    border-radius: var(--radius-md);
+  }
+
+  /* Selección de texto en rojo Zeus */
+  ::selection {
+    background: var(--zeus-100);
+    color: var(--zeus-700);
+  }
+}
+
+/* ============================================
+   UTILIDADES CUSTOM
+   ============================================ */
+
+@layer utilities {
+  /* Eyebrow · rojo, uppercase, tracking · patrón omnipresente */
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--zeus-500);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  /* Para números tabulares · grilla de agenda, horas, métricas */
+  .tabular {
+    font-feature-settings: 'tnum';
+    font-variant-numeric: tabular-nums;
+  }
+}
