@@ -12,7 +12,7 @@ export function ConfirmDialog({
   onConfirm,
   onCancel,
 }) {
-  // Cerrar con ESC
+  
   useEffect(() => {
     if (!open) return
     const onKey = (e) => {

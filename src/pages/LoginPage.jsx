@@ -28,11 +28,8 @@ export function LoginPage() {
 
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_1.2fr]">
-
-      {/* Columna izquierda · formulario */}
       <div className="flex items-center justify-center px-6 py-12 bg-bone-bg">
         <div className="w-full max-w-sm">
-          {/* Marca */}
           <Link to="/" className="inline-flex items-center gap-2 mb-12">
             <div className="w-9 h-9 rounded-full bg-zeus-500 text-white flex items-center justify-center font-medium text-base">
               Z
@@ -100,7 +97,6 @@ export function LoginPage() {
         </div>
       </div>
 
-      {/* Columna derecha · panel de marca */}
       <div className="hidden lg:flex relative bg-zeus-500 text-white flex-col justify-between p-12 overflow-hidden">
         {/* Patrón decorativo sutil */}
         <div className="absolute inset-0 opacity-10" style={{

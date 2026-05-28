@@ -134,10 +134,8 @@ export function AdminNuevaCitaPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-5">
 
-        {/* Columna principal */}
         <div className="space-y-5">
 
-          {/* 1 · Participantes */}
           <Card>
             <div className="flex items-center gap-2 mb-4">
               <StepDot n={1} />
@@ -169,7 +167,6 @@ export function AdminNuevaCitaPage() {
             </div>
           </Card>
 
-          {/* 2 · Fecha */}
           <Card>
             <div className="flex items-center gap-2 mb-4">
               <StepDot n={2} />
@@ -185,7 +182,6 @@ export function AdminNuevaCitaPage() {
             />
           </Card>
 
-          {/* 3 · Horario */}
           <Card>
             <div className="flex items-center gap-2 mb-4">
               <StepDot n={3} />
@@ -233,7 +229,6 @@ export function AdminNuevaCitaPage() {
           </Card>
         </div>
 
-        {/* Resumen lateral */}
         <aside className="space-y-3 lg:sticky lg:top-8 self-start">
           <Card>
             <div className="eyebrow mb-3">Resumen</div>

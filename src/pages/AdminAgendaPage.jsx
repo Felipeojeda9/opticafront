@@ -39,8 +39,8 @@ export function AdminAgendaPage() {
   const [error, setError] = useState('')
 
   // Estado de los diálogos
-  const [bloqueandoSlot, setBloqueandoSlot] = useState(null)   // { hora }
-  const [desbloqueando, setDesbloqueando] = useState(null)     // { hora, bloqueoId }
+  const [bloqueandoSlot, setBloqueandoSlot] = useState(null)
+  const [desbloqueando, setDesbloqueando] = useState(null)     
   const [bloqueandoDia, setBloqueandoDia] = useState(false)
   const [accionEnCurso, setAccionEnCurso] = useState(false)
 
@@ -78,7 +78,6 @@ export function AdminAgendaPage() {
 
   useEffect(() => { cargar() }, [cargar])
 
-  // === Acciones ===
   const confirmarBloquearSlot = async (motivo) => {
     if (!bloqueandoSlot) return
     setAccionEnCurso(true)
@@ -128,7 +127,7 @@ export function AdminAgendaPage() {
     }
   }
 
-  // === Vista ===
+
   const citasPorHora = useMemo(
     () => Object.fromEntries(citasDelDia.map((c) => [horaDe(c.fechaHora), c])),
     [citasDelDia]
@@ -187,7 +186,6 @@ export function AdminAgendaPage() {
         </Card>
       )}
 
-      {/* Controles */}
       <Card padding="sm" className="mb-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <Select
@@ -210,7 +208,6 @@ export function AdminAgendaPage() {
         </div>
       </Card>
 
-      {/* Resumen + leyenda */}
       {!loading && slots.length > 0 && (
         <div className="flex items-center justify-between mb-3 px-1">
           <div className="capitalize text-sm text-ink-1 font-medium">
@@ -261,7 +258,6 @@ export function AdminAgendaPage() {
         </Card>
       )}
 
-      {/* Diálogos */}
       <PromptDialog
         open={!!bloqueandoSlot}
         title={`Bloquear ${bloqueandoSlot?.hora} hrs`}
@@ -338,7 +334,6 @@ function BloqueHorario({ titulo, slots, citasPorHora, onBloquear, onDesbloquear,
 function SlotRow({ slot, cita, ultimo, onBloquear, onDesbloquear }) {
   const border = !ultimo ? 'border-b border-bone-border' : ''
 
-  // 1. Slot con cita agendada
   if (cita) {
     return (
       <div
@@ -360,7 +355,6 @@ function SlotRow({ slot, cita, ultimo, onBloquear, onDesbloquear }) {
     )
   }
 
-  // 2. Slot bloqueado
   if (slot.bloqueado) {
     return (
       <button
@@ -382,7 +376,6 @@ function SlotRow({ slot, cita, ultimo, onBloquear, onDesbloquear }) {
     )
   }
 
-  // 3. Slot libre
   if (slot.disponible) {
     return (
       <button
@@ -399,7 +392,6 @@ function SlotRow({ slot, cita, ultimo, onBloquear, onDesbloquear }) {
     )
   }
 
-  // 4. Slot fuera de horario / no disponible
   return (
     <div
       className={`grid grid-cols-[70px_1fr_auto] items-center px-4 py-2.5 ${border}`}

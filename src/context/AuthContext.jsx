@@ -7,7 +7,6 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Al montar: si hay token guardado, traer al usuario
   useEffect(() => {
     const cargarUsuario = async () => {
       if (!tokenStorage.get()) {

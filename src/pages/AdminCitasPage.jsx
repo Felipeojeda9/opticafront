@@ -107,7 +107,6 @@ export function AdminCitasPage() {
         </Card>
       )}
 
-      {/* Filtros */}
       <Card padding="sm" className="mb-5">
         <div className="flex items-end gap-3 flex-wrap">
           <Select
@@ -219,7 +218,6 @@ export function AdminCitasPage() {
         </Card>
       )}
 
-      {/* Diálogo de cancelación */}
       <ConfirmDialog
         open={!!citaACancelar}
         title="¿Cancelar esta cita?"

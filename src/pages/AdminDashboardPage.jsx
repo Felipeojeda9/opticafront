@@ -113,7 +113,6 @@ export function AdminDashboardPage() {
         }
       />
 
-      {/* Métricas */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
         <Stat
           label="Citas hoy"
@@ -139,7 +138,6 @@ export function AdminDashboardPage() {
         />
       </div>
 
-      {/* Hoy */}
       <section className="mb-10">
         <div className="flex items-baseline justify-between mb-3">
           <div>
@@ -176,7 +174,6 @@ export function AdminDashboardPage() {
         )}
       </section>
 
-      {/* Próximos 7 días */}
       <section>
         <div className="mb-3">
           <div className="eyebrow mb-1">Vista semanal</div>

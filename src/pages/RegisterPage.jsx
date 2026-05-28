@@ -70,7 +70,6 @@ export function RegisterPage() {
           Completa tus datos para acceder al sistema.
         </p>
 
-        {/* Selector de rol como tabs visuales */}
         <div className="grid grid-cols-2 gap-2 mb-6 p-1 bg-white border border-bone-border rounded-md">
           <RolToggle
             value="PACIENTE"

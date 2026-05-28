@@ -26,7 +26,6 @@ function calcularEdad(iso) {
   return edad
 }
 
-// Búsqueda simple: case-insensitive, sin tildes, sobre varios campos
 function normalizar(s) {
   return (s || '')
     .toString()
@@ -76,7 +75,6 @@ export function AdminUsuariosPage() {
     )
   }, [profesionales, q])
 
-  // Reset búsqueda al cambiar de tab
   const cambiarTab = (nuevo) => {
     setTab(nuevo)
     setBusqueda('')
@@ -130,7 +128,6 @@ export function AdminUsuariosPage() {
         className="mb-5"
       />
 
-      {/* Búsqueda */}
       <div className="flex items-center gap-3 mb-5">
         <Input
           icon="ti-search"
@@ -149,8 +146,7 @@ export function AdminUsuariosPage() {
           </div>
         )}
       </div>
-
-      {/* Tabla */}
+      
       {lista.length === 0 ? (
         <Card>
           <div className="flex items-center gap-3 text-ink-2 text-sm py-2">

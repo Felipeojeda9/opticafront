@@ -45,7 +45,6 @@ export function MiAgendaPage() {
   const [bloqueandoDia, setBloqueandoDia] = useState(false)
   const [accionEnCurso, setAccionEnCurso] = useState(false)
 
-  // Paso 1: encontrar mi perfil de profesional
   useEffect(() => {
     api.get('/users/profesionales')
       .then((lista) => {
@@ -61,7 +60,6 @@ export function MiAgendaPage() {
       .finally(() => setLoadingPerfil(false))
   }, [user.id])
 
-  // Paso 2: slots + citas del día
   const cargar = useCallback(async () => {
     if (!profesionalId) return
     setLoading(true)
@@ -86,7 +84,6 @@ export function MiAgendaPage() {
 
   useEffect(() => { cargar() }, [cargar])
 
-  // === Acciones · sin profesionalId, el backend lo infiere ===
   const confirmarBloquearSlot = async (motivo) => {
     if (!bloqueandoSlot) return
     setAccionEnCurso(true)
@@ -209,7 +206,6 @@ export function MiAgendaPage() {
         </Card>
       )}
 
-      {/* Selector de fecha */}
       <Card padding="sm" className="mb-5">
         <div className="flex items-end gap-3 flex-wrap">
           <Input
@@ -255,7 +251,6 @@ export function MiAgendaPage() {
         </div>
       </Card>
 
-      {/* Resumen + leyenda */}
       {!loading && slots.length > 0 && (
         <div className="flex items-center justify-between mb-3 px-1">
           <div className="text-sm text-ink-1">

@@ -70,7 +70,7 @@ export function HomePage() {
   if (loadingAuth) {
     return (
       <div className="min-h-screen flex items-center justify-center text-ink-2 text-sm">
-        Cargando…
+        Cargando...
       </div>
     )
   }
@@ -126,7 +126,6 @@ export function HomePage() {
           )}
         </div>
 
-        {/* Atajos · 1 columna */}
         <aside className="space-y-3">
           <div className="eyebrow mb-2">Atajos</div>
 
@@ -182,7 +181,6 @@ export function HomePage() {
         </aside>
       </div>
 
-      {/* Agenda del día · solo profesional con citas hoy */}
       {esProfesional && !loading && citasHoy.length > 0 && (
         <section className="mt-10">
           <div className="flex items-baseline justify-between mb-3">

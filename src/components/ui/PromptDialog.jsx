@@ -19,12 +19,10 @@ export function PromptDialog({
 }) {
   const [valor, setValor] = useState('')
 
-  // Resetear al abrir
   useEffect(() => {
     if (open) setValor('')
   }, [open])
 
-  // Cerrar con ESC
   useEffect(() => {
     if (!open) return
     const onKey = (e) => {

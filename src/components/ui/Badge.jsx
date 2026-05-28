@@ -7,7 +7,6 @@ const VARIANTES = {
   neutral:   'bg-bone-surface text-ink-2',
 }
 
-// Mapeo automático de estados del backend al variant
 const ESTADO_A_VARIANTE = {
   PENDIENTE:   'pending',
   CONFIRMADA:  'confirmed',

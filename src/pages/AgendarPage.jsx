@@ -87,7 +87,6 @@ export function AgendarPage() {
   return (
     <div className="min-h-screen bg-bone-bg">
 
-      {/* Header simple, no es AppLayout */}
       <header className="bg-white border-b border-bone-border">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
@@ -112,7 +111,6 @@ export function AgendarPage() {
         </div>
       </header>
 
-      {/* Hero */}
       <div className="text-center pt-12 pb-8 px-6">
         <div className="eyebrow mb-2">Reserva en línea</div>
         <h1 className="font-serif text-4xl text-ink-0 mb-3 leading-tight">
@@ -123,14 +121,12 @@ export function AgendarPage() {
         </p>
       </div>
 
-      {/* Stepper */}
       <div className="max-w-2xl mx-auto px-6 mb-10">
         <Stepper
           paso={!profesionalId ? 1 : !slotElegido ? 2 : 3}
         />
       </div>
 
-      {/* Contenido */}
       <div className="max-w-5xl mx-auto px-6 pb-16">
 
         {error && (
@@ -153,7 +149,6 @@ export function AgendarPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-5">
 
-          {/* Selección */}
           <Card>
             <div className="mb-6">
               <div className="eyebrow mb-2">Paso 1 · Servicio</div>
@@ -225,7 +220,6 @@ export function AgendarPage() {
             </div>
           </Card>
 
-          {/* Resumen */}
           <aside className="space-y-3 lg:sticky lg:top-8 self-start">
             <Card>
               <div className="eyebrow mb-3">Tu reserva</div>

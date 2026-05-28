@@ -140,7 +140,6 @@ export function CitasPage() {
         </Card>
       ) : (
         <>
-          {/* Próximas */}
           <section className="mb-8">
             <div className="mb-3">
               <div className="eyebrow mb-1">Por venir</div>
@@ -169,7 +168,6 @@ export function CitasPage() {
             )}
           </section>
 
-          {/* Pasadas */}
           {pasadas.length > 0 && (
             <section>
               <div className="mb-3">
@@ -239,7 +237,6 @@ function CitaCard({ cita, esPaciente, onCancelar, destacar = false }) {
             : ''
         }`}
       >
-        {/* Fecha / hora */}
         <div className="text-center min-w-[60px]">
           <div className="text-[10px] uppercase tracking-[1px] text-ink-2">
             {new Date(cita.fechaHora).toLocaleDateString('es-CL', { month: 'short' })}
@@ -252,7 +249,6 @@ function CitaCard({ cita, esPaciente, onCancelar, destacar = false }) {
           </div>
         </div>
 
-        {/* Contraparte */}
         <div className="min-w-0">
           <div className="text-[10px] text-ink-2 uppercase tracking-[1px] mb-0.5">
             {contraparteRol ?? (esPaciente ? 'Profesional' : 'Paciente')}
@@ -265,7 +261,6 @@ function CitaCard({ cita, esPaciente, onCancelar, destacar = false }) {
           </div>
         </div>
 
-        {/* Estado + acción */}
         <div className="flex flex-col items-end gap-2">
           <Badge estado={cita.estado}>{cita.estado.toLowerCase()}</Badge>
           {!cancelada && !pasada && (

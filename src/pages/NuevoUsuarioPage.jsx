@@ -24,7 +24,6 @@ export function NuevoUsuarioPage() {
   const { user } = useAuth()
   const navigate = useNavigate()
 
-  // Admin crea cualquier rol; profesional solo pacientes.
   const rolesDisponibles = user.rol === 'ADMIN'
     ? ['PACIENTE', 'PROFESIONAL', 'ADMIN']
     : ['PACIENTE']
@@ -68,8 +67,6 @@ export function NuevoUsuarioPage() {
       }
 
       await crearUsuario(payload)
-      // Ignoramos el acces_token de la respuesta — no cambiamos la sesión activa.
-
       setSuccess(`${ROL_LABEL[form.rol]} creado correctamente.`)
       setForm({
         nombre: '',
@@ -109,7 +106,6 @@ export function NuevoUsuarioPage() {
         }
       />
 
-      {/* Banners de estado */}
       {error && (
         <Card className="mb-5 border-zeus-200 bg-zeus-50">
           <div className="flex items-start gap-3">
@@ -150,7 +146,6 @@ export function NuevoUsuarioPage() {
       )}
 
       <form onSubmit={handleSubmit}>
-        {/* Selector de rol · solo si hay más de uno */}
         {rolesDisponibles.length > 1 && (
           <Card className="mb-5">
             <div className="eyebrow mb-3">Tipo de cuenta</div>
@@ -175,7 +170,6 @@ export function NuevoUsuarioPage() {
           </Card>
         )}
 
-        {/* Datos de cuenta */}
         <Card className="mb-5">
           <div className="eyebrow mb-4">Datos de la cuenta</div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -223,7 +217,6 @@ export function NuevoUsuarioPage() {
           </div>
         </Card>
 
-        {/* Datos específicos del rol */}
         {form.rol === 'PACIENTE' && (
           <Card className="mb-5">
             <div className="eyebrow mb-4">Datos del paciente</div>
