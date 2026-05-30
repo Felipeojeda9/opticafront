@@ -1,8 +1,53 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
+
+const SLIDES = [
+  {
+    eyebrow: 'Óptica Zeus · Linares',
+    titulo: 'Salud visual, regulada y trazable.',
+    descripcion:
+      'La única óptica de Linares con laboratorio de montaje propio, atención clínica especializada y entrega de lentes desde una hora.',
+    stats: [
+      { numero: '+18', label: 'Años de experiencia' },
+      { numero: '+7', label: 'Años en Linares' },
+      { numero: '+15K', label: 'Pacientes' },
+    ],
+  },
+  {
+    eyebrow: 'Visítanos',
+    titulo: 'Dos sucursales en Linares.',
+    descripcion:
+      'Atención clínica, laboratorio de montaje y asesoría personalizada en ambas ubicaciones.',
+    contactos: [
+      {
+        icon: 'ti-building-store',
+        nombre: 'Casa Matriz',
+        detalle: 'Independencia 464, Centro de Linares',
+        telefono: '+56 9 3617 6438',
+      },
+      {
+        icon: 'ti-building',
+        nombre: 'Sucursal Maipú',
+        detalle: 'Maipú 410-E, esq. Manuel Rodríguez',
+        telefono: '+56 9 7923 2343',
+      },
+    ],
+  },
+  {
+    eyebrow: 'Nuestro compromiso',
+    titulo: 'Comprometidos con tu salud visual.',
+    descripcion:
+      'Combinamos experiencia clínica, tecnología y trato cercano para entregar soluciones confiables a personas y organizaciones.',
+    redes: [
+      { icon: 'ti-brand-facebook', label: 'Facebook', url: 'https://web.facebook.com/opticazeuscl?_rdc=1&_rdr' },
+      { icon: 'ti-brand-instagram', label: 'Instagram', url: 'https://www.instagram.com/opticazeuscl/' },
+      { icon: 'ti-brand-whatsapp', label: 'WhatsApp', url: 'https://wa.me/56936176438' },
+    ],
+  },
+]
 
 export function LoginPage() {
   const navigate = useNavigate()
@@ -11,6 +56,14 @@ export function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [slideActivo, setSlideActivo] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setSlideActivo((prev) => (prev + 1) % SLIDES.length)
+    }, 6000)
+    return () => clearInterval(id)
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -25,6 +78,8 @@ export function LoginPage() {
       setLoading(false)
     }
   }
+
+  const slide = SLIDES[slideActivo]
 
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_1.2fr]">
@@ -87,7 +142,6 @@ export function LoginPage() {
               {loading ? 'Entrando' : 'Entrar'}
             </Button>
           </form>
-
         </div>
       </div>
 
@@ -98,36 +152,89 @@ export function LoginPage() {
         }} />
 
         <div className="relative">
-          <div className="text-[11px] uppercase tracking-[2px] opacity-75 mb-3">
-            Óptica Zeus · Linares
+          <div
+            key={`eyebrow-${slideActivo}`}
+            className="text-[11px] uppercase tracking-[2px] opacity-75 animate-fade-in"
+          >
+            {slide.eyebrow}
           </div>
         </div>
 
-        <div className="relative max-w-md">
-          <div className="font-serif text-4xl leading-tight mb-4">
-            Salud visual, regulada y trazable.
+        <div className="relative max-w-md" key={`content-${slideActivo}`}>
+          <div className="animate-fade-in">
+            <div className="font-serif text-4xl leading-tight mb-4">
+              {slide.titulo}
+            </div>
+            <p className="text-white/80 text-sm leading-relaxed mb-6">
+              {slide.descripcion}
+            </p>
+
+            {slide.stats && (
+              <div className="grid grid-cols-3 gap-4 text-white/90 mt-8">
+                {slide.stats.map((s, i) => (
+                  <div key={i}>
+                    <div className="font-serif text-3xl leading-none">{s.numero}</div>
+                    <div className="text-[11px] text-white/70 mt-1 leading-tight">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {slide.contactos && (
+              <div className="space-y-4 mt-6">
+                {slide.contactos.map((c, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                      <i className={`ti ${c.icon} text-lg`} />
+                    </div>
+                    <div className="leading-tight">
+                      <div className="text-[13px] font-medium">{c.nombre}</div>
+                      <div className="text-[12px] text-white/75 mt-0.5">{c.detalle}</div>
+                      <div className="text-[12px] text-white/90 font-mono mt-1">{c.telefono}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+          {slide.redes && (
+              <div className="flex gap-3 mt-6">
+                {slide.redes.map((r, i) => (
+                  <a
+                    key={i}
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                    title={r.label}
+                    aria-label={r.label}
+                  >
+                    <i className={`ti ${r.icon} text-xl`} />
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
-          <p className="text-white/80 text-sm leading-relaxed">
-            La única óptica de Linares con laboratorio de montaje propio,
-            atención clínica especializada y entrega de lentes desde una hora.
-          </p>
         </div>
 
-        <div className="relative grid grid-cols-3 gap-4 text-white/90">
-          <Stat numero="+18" label="Años de experiencia" />
-          <Stat numero="+7" label="Años en Linares" />
-          <Stat numero="+15K" label="Pacientes" />
+        <div className="relative flex items-center justify-between">
+          <div className="flex gap-2">
+            {SLIDES.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setSlideActivo(i)}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === slideActivo ? 'w-8 bg-white' : 'w-1.5 bg-white/30 hover:bg-white/50'
+                }`}
+                aria-label={`Ir a slide ${i + 1}`}
+              />
+            ))}
+          </div>
+          <div className="text-[11px] text-white/50 font-mono tabular">
+            {String(slideActivo + 1).padStart(2, '0')} / {String(SLIDES.length).padStart(2, '0')}
+          </div>
         </div>
       </div>
-    </div>
-  )
-}
-
-function Stat({ numero, label }) {
-  return (
-    <div>
-      <div className="font-serif text-3xl leading-none">{numero}</div>
-      <div className="text-[11px] text-white/70 mt-1 leading-tight">{label}</div>
     </div>
   )
 }

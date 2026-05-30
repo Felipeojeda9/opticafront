@@ -2,24 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ============================================
-   ZEUS DESIGN TOKENS
-   Variables CSS · fuente única de verdad
-   ============================================ */
+/* ================================
+   Diseño de zeus, gracias claudito
+   ================================*/
 
 :root {
-  /* === MARCA · Rojo Zeus === */
+  /* carca Rojo Zeus*/
   --zeus-50:  #FDF2F3;
   --zeus-100: #FBE0E2;
   --zeus-200: #F4B5BA;
   --zeus-300: #E47880;
   --zeus-400: #C73642;
-  --zeus-500: #A8202D;  /* base de marca */
+  --zeus-500: #A8202D;  /*base de marca*/
   --zeus-600: #8A1721;
   --zeus-700: #6B1018;
   --zeus-800: #4A0B11;
 
-  /* === NEUTROS · Cálidos (hueso) === */
+  /*NEUTROS · Cálidos (hueso)*/
   --bone-bg:      #FAFAF7;  /* fondo de página */
   --bone-surface: #F5F4F0;  /* superficies elevadas suaves */
   --bone-border:  #E8E6DF;  /* bordes finos */
@@ -97,27 +96,21 @@
     font-family: var(--font-serif);
     letter-spacing: -0.02em;
   }
-
-  /* Focus visible accesible · ring rojo suave */
+  /*ring rojo suave */
   *:focus-visible {
     outline: 2px solid var(--zeus-400);
     outline-offset: 2px;
     border-radius: var(--radius-md);
   }
 
-  /* Selección de texto en rojo Zeus */
+  /* Texto rojo para l pagina */
   ::selection {
     background: var(--zeus-100);
     color: var(--zeus-700);
   }
 }
-
-/* ============================================
-   UTILIDADES CUSTOM
-   ============================================ */
-
+/* custom*/
 @layer utilities {
-  /* Eyebrow · rojo, uppercase, tracking · patrón omnipresente */
   .eyebrow {
     font-size: 11px;
     font-weight: 500;
@@ -125,10 +118,22 @@
     text-transform: uppercase;
     letter-spacing: 1.5px;
   }
-
-  /* Para números tabulares · grilla de agenda, horas, métricas */
   .tabular {
     font-feature-settings: 'tnum';
     font-variant-numeric: tabular-nums;
   }
+}
+/* animaciones del home*/
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
 }
