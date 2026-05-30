@@ -404,7 +404,7 @@ function SlotRow({ slot, cita, ultimo, onBloquear, onDesbloquear }) {
     </div>
   )
 }
-{/*
+{/* hecho con amor en:
                 .88888888:.
                88888888.88888.
              .8888888888888888.
